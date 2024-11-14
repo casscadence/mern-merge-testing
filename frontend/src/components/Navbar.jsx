@@ -45,13 +45,17 @@ const Navbar = () => {
 
 	useEffect(() => {
 		fetchCart();
+		//setTotal(cart?.map((c, i) => {return c.price * c.quantity}).reduce((p, c) => (p + c)));
 	}, []);
+
+	useEffect(() => {
+		setTotal(cart?.map((c, i) => {return c.price * c.quantity}).reduce((p, c) => (p + c), 0));
+	}, [cart]);
 
 	useEffect(() => {
 		setProductList(cart);
 		setAmount(cart.length);
-		console.log("cart:", cart.map((c, i) => {return c.price}).reduce((p, c) => p + c));
-		setTotal(cart.map((c, i) => {return c.price * c.quantity}).reduce((p, c) => (p + c)));
+		//console.log("cart:", cart.map((c, i) => {return c.price}).reduce((p, c) => p + c));
 	}, [cart]);
 	
 	const subQuantity = (product) => {
