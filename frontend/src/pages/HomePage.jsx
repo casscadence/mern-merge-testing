@@ -17,7 +17,6 @@ const HomePage = () => {
 
 	return (
 		<Container maxW='container.xl' py={12}>
-			<ProductNavbar />
 			<Container maxW='container.xl' py={12} margin="0">
 				<VStack spacing={8} alignItems="flex-start">
 					<Text

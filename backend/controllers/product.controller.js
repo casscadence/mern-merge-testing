@@ -110,8 +110,6 @@ export const updateCart = async (req, res) => {
 	}
 
 	try {
-		//connecting to the table (schema) and making a query to findbyidandupdate, passing in what was received from the frontend to update it
-		//const updatedProduct = user._id === product._id ? await Cart.findByIdAndUpdate(user.id, {quantity: product.quantity}, { new: true }) : Cart.findByIdAndUpdate(user.id, {quantity: product.quantity + 1}, { new: true });
 		if (!mongoose.Types.ObjectId.isValid(id)) {
 			return res.status(404).json({ success: false, message: "Invalid Product Id" });
 		}

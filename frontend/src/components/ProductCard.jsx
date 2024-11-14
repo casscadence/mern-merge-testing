@@ -21,6 +21,7 @@ import {
 	VStack,
 	
 } from "@chakra-ui/react";
+import { useEffect } from "react";
 import { useProductStore } from "../store/product.js";
 import { useCart } from "../store/cart.js";
 import { useState } from "react";
@@ -31,10 +32,16 @@ const ProductCard = ({ product }) => {
 	const textColor = useColorModeValue("gray.600", "gray.200");
 	const bg = useColorModeValue("white", "gray.800");
 
+	const { fetchCart, cart } = useCart();
 	const { deleteProduct, updateProduct } = useProductStore();
 	const { addCart, updateCart } = useCart();
 	const toast = useToast();
 	const { isOpen, onOpen, onClose } = useDisclosure();
+
+	useEffect(() => {
+		fetchCart();
+	}, [fetchCart]);
+
 
 	const handleAddCart = async (product) => {
 		const { success, message } = await addCart(product);
@@ -56,7 +63,6 @@ const ProductCard = ({ product }) => {
 	};
 
 	const handleUpdateCart = async (product) => {
-		//console.log("product id: ", product._id);
 		const { success, message } = await updateCart(product._id, product);
 		if (!success) {
 			handleAddCart(product);
