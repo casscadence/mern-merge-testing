@@ -109,11 +109,13 @@ export const updateCart = async (req, res) => {
 		return res.status(404).json({ success: false, message: "Invalid Product Id" });
 	}
 
+	const items = await Cart.findById(id);
+	if(items == null) {
+		return res.status(404).json({ success: false, message: "Invalid Product Id" });
+	}
+
 	try {
-		if (!mongoose.Types.ObjectId.isValid(id)) {
-			return res.status(404).json({ success: false, message: "Invalid Product Id" });
-		}
-		const updatedProduct = await Cart.findByIdAndUpdate(product._id, product, { new: true });
+		const updatedProduct = await Cart.findByIdAndUpdate(id, product, { new: true });
 		res.status(200).json({ success: true, data: updatedProduct });
 	} catch (error) {
 		res.status(500).json({ success: false, message: "Server Error" });
@@ -127,6 +129,9 @@ export const removeCart = async (req, res) => {
 	if (!mongoose.Types.ObjectId.isValid(id)) {
 		return res.status(404).json({ success: false, message: "Invalid Product Id" });
 	}
+
+	//const item = await Cart.findById(id);
+	//console.log(item);
 
 	try {
 		await Cart.findByIdAndDelete(id);

@@ -21,6 +21,7 @@ import {
 	VStack,
 	
 } from "@chakra-ui/react";
+import React from 'react';
 import { useEffect } from "react";
 import { useProductStore } from "../store/product.js";
 import { useCart } from "../store/cart.js";
@@ -64,13 +65,15 @@ const ProductCard = ({ product }) => {
 
 	const handleUpdateCart = async (product) => {
 		const { success, message } = await updateCart(product._id, product);
+		onClose();
 		if (!success) {
 			handleAddCart(product);
 		} else {
 			toast({
 				title: "",
-				description: message,
+				description: "Product updated successfully",
 				status: "success",
+				duration: 3000,
 				isClosable: true,
 			});
 		}

@@ -44,13 +44,12 @@ export const useCart = create((set) => ({
 		});
 
 		const data = await res.json();
-		//console.log("data:", data);
-		//console.log("updatedProduct: ", updatedProduct);
+		console.log("cart.js");
 		
 		if (!data.success) return { success: false, message: data.message };
 
 		set((state) => ({
-			cart: state.cart.map((product) => (product._id === pid ? data.data : product)),
+			cart: state.cart.map((product) => (product.name == updatedProduct.name ? data.data : product)),
 		}));
 
 		return { success: true, message: "Cart Updated" };
