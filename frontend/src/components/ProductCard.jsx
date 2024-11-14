@@ -1,4 +1,4 @@
-import { DeleteIcon, EditIcon } from "@chakra-ui/icons";
+import { DeleteIcon, EditIcon, PlusSquareIcon } from "@chakra-ui/icons";
 import {
 	Box,
 	Button,
@@ -19,8 +19,10 @@ import {
 	useDisclosure,
 	useToast,
 	VStack,
+	
 } from "@chakra-ui/react";
 import { useProductStore } from "../store/product.js";
+import { useCart } from "../store/cart.js";
 import { useState } from "react";
 
 const ProductCard = ({ product }) => {
@@ -30,8 +32,67 @@ const ProductCard = ({ product }) => {
 	const bg = useColorModeValue("white", "gray.800");
 
 	const { deleteProduct, updateProduct } = useProductStore();
+	const { addCart, updateCart } = useCart();
 	const toast = useToast();
 	const { isOpen, onOpen, onClose } = useDisclosure();
+
+	const handleAddCart = async (product) => {
+		const { success, message } = await addCart(product);
+		if (!success) {
+			toast({
+				title: "Error",
+				description: message,
+				status: "error",
+				isClosable: true,
+			});
+		} else {
+			toast({
+				title: "",
+				description: message,
+				status: "success",
+				isClosable: true,
+			});
+		}
+	};
+
+	const handleUpdateCart = async (product) => {
+		//console.log("product id: ", product._id);
+		const { success, message } = await updateCart(product._id, product);
+		if (!success) {
+			handleAddCart(product);
+		} else {
+			toast({
+				title: "",
+				description: message,
+				status: "success",
+				isClosable: true,
+			});
+		}
+	};
+
+	const handleUpdateProduct = async (pid, updatedProduct) => {
+		// passes the pid and updatedProduct to the updateProduct action and stores the resulting boolean and string
+		const { success, message } = await updateProduct(pid, updatedProduct);
+		// closes the modal
+		onClose();
+		if (!success) {
+			toast({
+				title: "Error",
+				description: message,
+				status: "error",
+				duration: 3000,
+				isClosable: true,
+			});
+		} else {
+			toast({
+				title: "",
+				description: "Product updated successfully",
+				status: "success",
+				duration: 3000,
+				isClosable: true,
+			});
+		}
+	};
 
 	const handleDeleteProduct = async (pid) => {
 		const { success, message } = await deleteProduct(pid);
@@ -54,30 +115,6 @@ const ProductCard = ({ product }) => {
 		}
 	};
 
-	const handleUpdateProduct = async (pid, updatedProduct) => {
-		// passes the pid and updatedProduct to the updateProduct action and stores the resulting boolean and string
-		const { success, message } = await updateProduct(pid, updatedProduct);
-		// closes the modal
-		onClose();
-		if (!success) {
-			toast({
-				title: "Error",
-				description: message,
-				status: "error",
-				duration: 3000,
-				isClosable: true,
-			});
-		} else {
-			toast({
-				title: "Success",
-				description: "Product updated successfully",
-				status: "success",
-				duration: 3000,
-				isClosable: true,
-			});
-		}
-	};
-
 	return (
 		<Box
 			shadow='lg'
@@ -87,10 +124,21 @@ const ProductCard = ({ product }) => {
 			_hover={{ transform: "translateY(-5px)", shadow: "xl" }}
 			bg={bg}
 		>
-			<Image src={product.image} alt={product.name} h={48} w='full' objectFit='cover' />
+			<Box p={4} bg='white'>
+				<Image src={product.image} alt={product.name} h={48} w='100%' height='200px' objectFit='contain' 
+					border='solid 10px'
+					borderColor='white'
+					borderRadius='2px'
+					transition='border .3s'
+					_hover={{ border: 'solid 0px', borderColor: 'white', transition: 'border .3s' }}
+				/>
+			</Box>
 
-			<Box p={4}>
-				<Heading as='h3' size='md' mb={2}>
+			<Box p={4} >
+				<Text fontWeight='bold' fontSize='sm' color='green' mb={1}>
+					Produce
+				</Text>
+				<Heading as='h3' size='lg' mb={2}>
 					{product.name}
 				</Heading>
 
@@ -99,7 +147,8 @@ const ProductCard = ({ product }) => {
 				</Text>
 
 				<HStack spacing={2}>
-					<IconButton icon={<EditIcon />} onClick={onOpen} colorScheme='blue' />
+					<IconButton icon={<PlusSquareIcon />} onClick={() => handleUpdateCart(product)} colorScheme='blue' />
+					<IconButton icon={<PlusSquareIcon />} onClick={onOpen} colorScheme='green' />
 					<IconButton
 						icon={<DeleteIcon />}
 						onClick={() => handleDeleteProduct(product._id)}

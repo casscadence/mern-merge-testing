@@ -3,10 +3,8 @@ import { create } from "zustand";
 // set is what is passed in to useProductStore(): fetchProducts, products
 export const useProductStore = create((set) => ({
 	products: [],
-	// setProducts is a property with a value of the products array, which contains values: fetchProducts and products
 	setProducts: (products) => set({ products }),
 	// CREATE
-	// createProduct is a property with a value of a newProduct object, resulting from a function
 	createProduct: async (newProduct) => {
 		// if no name or image or price is found, then return a boolean and string without continuing
 		if (!newProduct.name || !newProduct.image || !newProduct.price) {

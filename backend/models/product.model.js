@@ -14,12 +14,16 @@ const productSchema = new mongoose.Schema(
 			type: String,
 			required: true,
 		},
+		quantity: {
+			type: Number,
+			required: true,
+		},
 	},
 	{
 		timestamps: true,
 	}
 );
 
-const Product = mongoose.model("Product", productSchema);
+const Product = mongoose.model("Products", productSchema);
 
 export default Product;
