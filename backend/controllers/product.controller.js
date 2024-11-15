@@ -34,8 +34,8 @@ export const getProducts = async (req, res) => {
 
 //UPDATE PRODUCTS
 export const updateProduct = async (req, res) => {
+	//receiving id and product from the frontend fetch request
 	const { id } = req.params; 
-
 	const product = req.body; 
 	
 	if (!mongoose.Types.ObjectId.isValid(id)) {
@@ -101,7 +101,6 @@ export const getCart = async (req, res) => {
 
 //UPDATE CART
 export const updateCart = async (req, res) => {
-	//receiving id and product from the frontend fetch request
 	const { id } = req.params; 
 	const product = req.body; 
 	
@@ -110,6 +109,7 @@ export const updateCart = async (req, res) => {
 	}
 
 	const items = await Cart.findById(id);
+	console.log("items: ", items);
 	if(items == null) {
 		return res.status(404).json({ success: false, message: "Invalid Product Id" });
 	}

@@ -3,7 +3,6 @@ import { useEffect } from "react";
 import { Link } from "react-router-dom";
 import { useProductStore } from "../store/product.js";
 import ProductCard from "../components/ProductCard.jsx";
-import ProductNavbar from "../components/ProductNavbar.jsx";
 
 const HomePage = () => {
 	const { fetchProducts, products } = useProductStore();
@@ -13,7 +12,6 @@ const HomePage = () => {
 	useEffect(() => {
 		fetchProducts();
 	}, [fetchProducts]);
-	console.log("products", products);
 
 	return (
 		<Container maxW='container.xl' py={12}>

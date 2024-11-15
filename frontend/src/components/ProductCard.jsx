@@ -63,7 +63,7 @@ const ProductCard = ({ product }) => {
 		}
 	};
 
-	const handleUpdateCart = async (product) => {
+/* 	const handleUpdateCart = async (product) => {
 		const { success, message } = await updateCart(product._id, product);
 		onClose();
 		if (!success) {
@@ -77,7 +77,7 @@ const ProductCard = ({ product }) => {
 				isClosable: true,
 			});
 		}
-	};
+	}; */
 
 	const handleUpdateProduct = async (pid, updatedProduct) => {
 		// passes the pid and updatedProduct to the updateProduct action and stores the resulting boolean and string

@@ -28,6 +28,7 @@ import { Minus, Plus } from '@chakra-icons/typicons';
 import { IoMoon } from "react-icons/io5";
 import { LuSun } from "react-icons/lu";
 import { useCart } from "../store/cart.js";
+import Logo from '../images/logo.png'
 
 const Navbar = () => {
 	const { colorMode, toggleColorMode } = useColorMode();
@@ -65,7 +66,6 @@ const Navbar = () => {
 	}
 
 	const handleUpdateCart = async (product) => {
-		console.log("product: ", product);
 		const { success, message } = await updateCart(product._id, product);
 		if (!success) {
 			console.log("could not update");
@@ -116,7 +116,7 @@ const Navbar = () => {
 					bg={"green"}
 					bgClip={"text"}
 				>
-					<Link to={"/"}>Supermarket App 🛒</Link>
+					<Link to={"/"}><Image w="10%" src={Logo} /></Link>
 				</Text>
 
 				<HStack spacing={2} alignItems={"center"}>

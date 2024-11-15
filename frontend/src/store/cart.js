@@ -44,7 +44,6 @@ export const useCart = create((set) => ({
 		});
 
 		const data = await res.json();
-		console.log("cart.js");
 		
 		if (!data.success) return { success: false, message: data.message };
 
