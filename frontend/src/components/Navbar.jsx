@@ -116,7 +116,7 @@ const Navbar = () => {
 					bg={"green"}
 					bgClip={"text"}
 				>
-					<Link to={"/"}><Image w="10%" src={Logo} /></Link>
+					<Link to={"/"}><Image w="110px" src={Logo} /></Link>
 				</Text>
 
 				<HStack spacing={2} alignItems={"center"}>
